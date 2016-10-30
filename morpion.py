@@ -122,7 +122,7 @@ class Morpion :
 			print "\n---COMPUTER > ROUND " + str(self.counter)  + "---\n"
 
 			self.counter += 1
-			self.playIA(2)
+			self.playIA(1)
 
 		self.player = not self.player
 
@@ -153,7 +153,7 @@ class Morpion :
 
 	def playIA(self, deepness, computer = True) :
 		maxValue = -5000
-		bestx, besty = 0, 0
+		bestx, besty = 0, 1
 
 		for j in range(3) :
 			for i in range(3) :
@@ -164,15 +164,12 @@ class Morpion :
 						self.table[i, j] = 'X'
 					value = self.theMin(deepness, not computer)
 
-					if value > maxValue :
+					if value > maxValue or (value == maxValue and self.random.randint(1, 2) % 2 == 0) :
 						maxValue = value
 						bestx = i
 						besty = j
 
 					self.table[i, j] = ' '
-
-		if self.twoInARaw('X') == 0 :
-			bestx, besty = self.random.randint(0, 2), self.random.randint(0, 2)
 
 		while self.table[bestx, besty] != ' ' :
 			bestx, besty = self.random.randint(0, 2), self.random.randint(0, 2)
